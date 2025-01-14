@@ -1,20 +1,24 @@
-const { rejects } = require("assert");
-const { resolve } = require("path");
-
 function promiseTimeout(ms) {
     return new Promise((resolve , reject) => {
         setTimeout(resolve , ms);
     });
 }
 
-async function run() {
+async function longRunningOperation() {
     //logic
-    console.log("start!!");
-    // try take of await and compare
-    await promiseTimeout(2000);
-    console.log("Stop!!");
+    return 42;
 }
 
+async function run() {
+    //logic
+    console.log("Start!!");
+    await promiseTimeout(2000);
+    //try to take await out and see
+    const response = await longRunningOperation();
+    console.log(response);
+
+    console.log("Stop!!");
+}
 console.log('Before run');
 run();
 console.log('After run');
